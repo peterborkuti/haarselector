@@ -42,8 +42,10 @@ struct MouseEvent {
 		selectionDone = false;
 		rightButton = false;
 		name = "Default";
+		maxRect = cv::Rect(0, 0, 0, 0);
 	}
-	MouseEvent(String n) {
+
+	MouseEvent(String n, int width, int height) {
 		event = -1;
 		buttonState = 0;
 		newEvent = false;
@@ -51,13 +53,16 @@ struct MouseEvent {
 		selectionDone = false;
 		rightButton = false;
 		name = n;
+		maxRect = Rect(0, 0, width, height);
 	}
+
 	String name;
 	Point pt;
 	int event;
 	int buttonState;
 	bool newEvent;
 	Point pt0;
+	Rect maxRect;
 	Rect rect;
 	bool selectionDone;
 	bool selectionStart;
@@ -86,6 +91,10 @@ struct MouseEvent {
 
 static void onMouse(int event, int x, int y, int flags, void* userdata) {
 	MouseEvent* data = (MouseEvent*) userdata;
+	if ((data->maxRect.width > 0) && !data->maxRect.contains(Point(x, y))) {
+		data->clearSelection();
+		return;
+	}
 	data->event = event;
 	data->pt = Point(x, y);
 	data->buttonState = flags;
@@ -324,9 +333,6 @@ int main(int argc, char** argv) {
 	String wMain = "Select a rectangle with the Mouse for magnifying";
 	String wSelected = "Select region";
 
-	MouseEvent mouseMainEvent("main");
-	MouseEvent mouseSelectedEvent("selected");
-
 	bool redrawMain = false;
 	bool redrawSelection = false;
 
@@ -348,6 +354,9 @@ int main(int argc, char** argv) {
 
 	imshow(wMain, img);
 	imshow(wSelected, sel);
+
+	MouseEvent mouseMainEvent("main", img.cols, img.rows);
+	MouseEvent mouseSelectedEvent("selected", 0, 0);
 
 	setMouseCallback(wMain, onMouse, &mouseMainEvent);
 	setMouseCallback(wSelected, onMouse, &mouseSelectedEvent);
