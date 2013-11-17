@@ -11,6 +11,8 @@
 
 #include <iostream>
 #include <fstream>
+#include <ctime>
+#include <stdio.h>
 
 #ifdef DEBUG
 #  define DEBUG(x) do { std::cerr << #x << ":" << x << std::endl; } while (0)
@@ -81,7 +83,6 @@ struct MouseEvent {
 		return ss;
 	}
 };
-
 
 static void onMouse(int event, int x, int y, int flags, void* userdata) {
 	MouseEvent* data = (MouseEvent*) userdata;
@@ -208,19 +209,27 @@ void selectionOnMainWindow(String wSelected, Mat img, Mat &sel,
 
 void save(std::string fileName, FileList fl) {
 	std::ofstream oFile;
+	char buf[50];
+	//archive existing saved data
+	std::time_t t = std::time(0);  // t is an integer type
+	std::sprintf(buf, "%s-%ld", fileName.c_str(), t);
+	rename(fileName.c_str(), buf);
+
+	//saving data
 	oFile.open(fileName.c_str());
 	oFile << fl;
+	oFile.flush();
 	oFile.close();
 }
 
 void load(std::string fileName, FileList &fl) {
 	std::ifstream iFile;
 	iFile.open(fileName.c_str());
-	iFile >> fl;
+	if (iFile.good()) {
+		iFile >> fl;
+	}
 	iFile.close();
 }
-
-
 
 bool keyManager(Selections &sel, bool &redrawMain, bool &redrawSelection,
 		Mat &img, FileList &fileList, MouseEvent &mainEvent) {
@@ -310,6 +319,7 @@ bool keyManager(Selections &sel, bool &redrawMain, bool &redrawSelection,
 
 int main(int argc, char** argv) {
 	FileList fileList("*.png");
+	load(FILENAME, fileList);
 
 	String wMain = "Select a rectangle with the Mouse for magnifying";
 	String wSelected = "Select region";

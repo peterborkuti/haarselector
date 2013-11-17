@@ -17,8 +17,11 @@ class FileData {
 public:
 	Selections selections;
 	bool background;
+	uint fileNameIndex;
 	FileData();
+	FileData(uint idx);
 	FileData(Selections sel, bool backgrd);
+	FileData(Selections sel, bool backgrd, uint idx);
 };
 
 typedef std::pair<std::string, FileData> PairMapFileData;
@@ -42,6 +45,7 @@ public:
 	void addSelections(std::string fileName, Selections sels);
 	void setAsBackground();
 	void setAsBackground(std::string fileName);
+	void setActive(std::string fileName);
 	void toggleBackground();
 	void setSelections(Selections sels);
 	void getSelections(Selections &sels);
@@ -49,8 +53,6 @@ public:
 	cv::Mat getNext(Selections &sels, const uint pcs);
 	cv::Mat getPrev(Selections &sels, const uint pcs);
 	std::string getTitle();
-	void save(std::string fileName);
-	void load(std::string fileName);
 	friend std::ostream& operator<<(std::ostream &strm, FileList &fl);
 	friend std::istream& operator>>(std::istream &strm, FileList &fl);
 
