@@ -333,10 +333,11 @@ int main(int argc, char** argv) {
 	String wMain = "Select a rectangle with the Mouse for magnifying";
 	String wSelected = "Select region";
 
-	bool redrawMain = false;
+	bool redrawMain = true;
 	bool redrawSelection = false;
 
 	Selections selections;
+	fileList.getSelections(selections);
 
 	Mat img = fileList.getNext(selections, 0);
 	Mat sel;
