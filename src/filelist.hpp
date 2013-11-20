@@ -13,6 +13,8 @@
 #include <string>
 #include "selections.hpp"
 
+#include "tracker.hpp"
+
 class FileData {
 public:
 	Selections selections;
@@ -34,6 +36,7 @@ private:
 	std::string pattern;
 	VecString files;
 	MapFileData mapSelections;
+	Tracker tracker;
 
 	void setPointers();
 	FileData getFileData(uint idx);
@@ -50,7 +53,8 @@ public:
 	void setSelections(Selections sels);
 	void getSelections(Selections &sels);
 	cv::Mat getImage();
-	cv::Mat getNext(Selections &sels, const uint pcs);
+	cv::Mat getActual(Selections &sels);
+	cv::Mat getNext(Selections &sels, const uint pcs, cv::Mat imgOld);
 	cv::Mat getPrev(Selections &sels, const uint pcs);
 	std::string getTitle();
 	friend std::ostream& operator<<(std::ostream &strm, FileList &fl);

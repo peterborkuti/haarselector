@@ -129,8 +129,18 @@ std::string FileList::getTitle() {
 	return s;
 }
 
-cv::Mat FileList::getNext(Selections &sels, const uint pcs) {
+cv::Mat FileList::getActual(Selections &sels) {
+	cv::Mat tmp;
+
+	return this->getNext(sels, 0, tmp);
+}
+
+cv::Mat FileList::getNext(Selections &sels, const uint pcs, cv::Mat imgOld) {
 	cv::Mat img;
+	uint idxOld = idx;
+	bool isTrackingSuccess = false;
+	Selections newSelections;
+
 	if (files.size() > 0) {
 		FileList::setSelections(sels);
 		idx += pcs;
@@ -139,7 +149,16 @@ cv::Mat FileList::getNext(Selections &sels, const uint pcs) {
 		}
 		img = cv::imread(files[idx]);
 		FileData d = FileList::getFileData(idx);
-		sels = d.selections;
+		if ((idx == idxOld + 1) && !sels.empty && d.selections.empty) {
+			isTrackingSuccess =
+					tracker.trackSelections(imgOld, sels, img, newSelections);
+		}
+		if (!isTrackingSuccess || newSelections.empty) {
+			sels = d.selections;
+		}
+		else {
+			sels = newSelections;
+		}
 	}
 
 	return img;

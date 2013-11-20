@@ -275,14 +275,14 @@ bool keyManager(Selections &sel, bool &redrawMain, bool &redrawSelection,
 	}
 
 	if (c == 'S') { //Right arrow
-		img = fileList.getNext(sel, 1);
+		img = fileList.getNext(sel, 1, img);
 		mainEvent.activate();
 		redrawMain = true;
 		redrawSelection = true;
 	}
 
 	if (c == 'R') { //UP arrow
-		img = fileList.getNext(sel, 10);
+		img = fileList.getNext(sel, 10, img);
 		mainEvent.activate();
 		redrawMain = true;
 		redrawSelection = true;
@@ -339,7 +339,7 @@ int main(int argc, char** argv) {
 	Selections selections;
 	fileList.getSelections(selections);
 
-	Mat img = fileList.getNext(selections, 0);
+	Mat img = fileList.getActual(selections);
 	Mat sel;
 
 	//the values below need for back-counting the selected region on wSelected
