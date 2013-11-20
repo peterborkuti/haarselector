@@ -27,6 +27,7 @@ bool Tracker::trackSelections(cv::Mat imgOrig, Selections sels,
 		cv::Mat img, Selections &trackedSels) {
 	Selections newSels;
 	bool trackingSuccess = false;
+	cv::Rect biggestRect(0, 0, img.cols, img.rows);
 
 	cv::cvtColor(imgOrig, greyOrigImg, CV_BGR2GRAY);
 	cv::cvtColor(img, greyNewImg, CV_BGR2GRAY);
@@ -36,7 +37,8 @@ bool Tracker::trackSelections(cv::Mat imgOrig, Selections sels,
 		cv::Rect trackedRect;
 		bool success = this->trackSelection(sels.selections[i].rect, trackedRect);
 		if (success) {
-			newSels.add(Selection(trackedRect));
+			//tracking can go out of images, so use intersection (&)
+			newSels.add(Selection(trackedRect & biggestRect));
 		}
 	}
 
