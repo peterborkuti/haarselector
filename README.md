@@ -1,10 +1,8 @@
 # Training-object Selector ![labeling](doc/images/label_001.png)
 
-![OpenCV logo](http://docs.opencv.org/_static/opencv-logo-white.png) ![labeling](doc/images/label_001.png) ![OpenCV logo](http://docs.opencv.org/_static/opencv-logo-white.png) 
-
 > UI program based on OpenCV to select and label rectangles on images for training object detection algorithms.
 
-## Table of contents
+## Table of contents ![OpenCV logo](http://docs.opencv.org/_static/opencv-logo-white.png)
 * [Short description](#short)
 * [Description](#description)
 * [Usage](#usage)
@@ -15,8 +13,6 @@
 
 Training object selector allows users to select objects from many images in order to train object detection algorithm 
 with them.
-
-![screenshot](doc/images/screenshot_001_small.png)
 
 ## Description
 
@@ -56,6 +52,8 @@ My program helps you with creating these two files.
 What you only need is 
 * to create many same-sized images which contain objects and backgrounds
 * use my program to select rectangles of objects on images and label them, or label the background images.
+
+![screenshot](doc/images/screenshot_001_small.png)
 
 ## Output
 
