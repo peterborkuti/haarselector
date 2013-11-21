@@ -138,8 +138,25 @@ void putTextInBox(Mat &img, std::string s, Point p) {
 			fontScale, Scalar::all(255), thickness, 8);
 }
 
+void putTextAboveBox(Mat &img, std::string s, Point p) {
+	int fontFace = FONT_HERSHEY_PLAIN;
+	double fontScale = 1;
+	int thickness = 1;
+	int baseline = 0;
+	String text = s;
+
+	Size textSize = getTextSize(text, fontFace, fontScale, thickness,
+			&baseline);
+	Point textOrg(p);
+	rectangle(img, textOrg,
+			textOrg + Point(textSize.width, - (textSize.height + 2 * baseline)),
+			Scalar(0, 0, 0), CV_FILLED);
+	putText(img, text, textOrg + Point(0, - baseline),
+			fontFace, fontScale, Scalar::all(255), thickness, 8);
+}
+
 void putType(Mat &img, Selection sel) {
-	putTextInBox(img, sel.getKey(", "), sel.rect.tl());
+	putTextAboveBox(img, sel.getKey(", "), sel.rect.tl());
 }
 
 void putTitle(Mat &img, FileList fl) {
