@@ -1,4 +1,4 @@
-# haar selector
+# ![OpenCV logo](http://docs.opencv.org/_static/opencv-logo-white.png) training object selector ![OpenCV logo](http://docs.opencv.org/_static/opencv-logo-white.png) 
 
 > UI program based on OpenCV to select and label rectangles on images for Haar object detection
 
@@ -11,21 +11,25 @@
 
 ## Short
 
-Haar selector allow users to selecting objects from many images in order to train haar detection with them.
+Training object selector allows users to select objects from many images in order to train object detection algorithm 
+with them.
 
 ## Description
 
 See on the OpenCV documentation, what
 [training](http://docs.opencv.org/doc/user_guide/ug_traincascade.html) is. In a nutshell:
 
-If you want to use OpenCV's Haar detection, you have to train Haar detector with appropriate images. Namely 
+If you want to use opencv_haartraining or opencv_traincascade, you have to have tons of images with
+the appropriate objects selected and labeled. Namely 
 positive and negative ("background") images. Positive samples are images on which there are rectangular areas which are
 labeled according to your needs.
 
-For example, you want to train Haar detector for car's front view, you need to create two lists of samples. One consists of
+My program helps you with selecting and labeling objects on images.
+
+For example, you want to train a detector for car's front view, you need to create two lists of samples. One consists of
 pictures of car's front views, the others consists of negative samples, aka backgrounds.
 
-The input list of haar-trainer is like this (from the OpenCV documentation)
+The input list of of a trainer is like this (from the OpenCV documentation)
 
 ```
 img/img1.jpg  1  140 100 45 45
@@ -63,8 +67,21 @@ CAR_FRONT ./20131027-121836/00000145.png 1 408 235 63 51
 CAR_FRONT ./20131027-121836/00000146.png 1 440 249 53 42
 ```
 
-You can filter this list later to ouput to different files the different types of lines
-(here "background" and "CAR_FRONT")
+You can filter this list later to ouput the different types of lines
+(here "background" and "CAR_FRONT") to different files (example: background.txt, car_front.txt)
+
+Than create a vector od samples:
+>./opencv_createsamples -vec vecout.dat -bg bakcground.txt -info car_front.txt -show
+
+Its output is vecout.dat.
+
+Than train:
+>./opencv_traincascade -bg bakcground.txt -data train -vec vecout.dat -numPos 400
+
+where numPos is less than the number of samples in vecout.dat.
+
+For more info on opencv_createsamples and opencv_traincascade, see OpenCV documentation.
+
 
 ## Features
 * Magnify a rectangle to help select more precisely
