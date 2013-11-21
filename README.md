@@ -1,6 +1,6 @@
 # ![OpenCV logo](http://docs.opencv.org/_static/opencv-logo-white.png) training object selector ![OpenCV logo](http://docs.opencv.org/_static/opencv-logo-white.png) 
 
-> UI program based on OpenCV to select and label rectangles on images for Haar object detection
+> UI program based on OpenCV to select and label rectangles on images for training object detection algorithms.
 
 ## Table of contents
 * [Short description](#short)
