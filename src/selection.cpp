@@ -9,17 +9,16 @@
 #include <stdio.h>
 #include <algorithm>
 
-
 const int TYPES_NUM = 4;
-const std::string TYPES[TYPES_NUM] = {"CAR","MOTOR","VAN","OTHER"};
+const std::string TYPES[TYPES_NUM] = { "CAR", "MOTOR", "VAN", "OTHER" };
 const int SUBTYPES_NUM = 2;
-const std::string SUBTYPES[SUBTYPES_NUM] = {"FRONT", "BACK"};
+const std::string SUBTYPES[SUBTYPES_NUM] = { "FRONT", "BACK" };
 enum {
-	CAR=0, MOTOR=1, VAN=2, OTHER=3
+	CAR = 0, MOTOR = 1, VAN = 2, OTHER = 3
 };
 
 enum {
-	FRONT=0, BACK=1
+	FRONT = 0, BACK = 1
 };
 
 Selection::Selection() {
@@ -93,8 +92,8 @@ std::string Selection::getKey(std::string sep) {
 }
 
 std::ostream& operator<<(std::ostream &strm, Selection sel) {
-	strm << sel.getKey(",") << " (" << sel.rect.x << "," << sel.rect.y << "," <<
-			sel.rect.width << "," << sel.rect.height << ")" << std::endl;
+	strm << sel.getKey(",") << " (" << sel.rect.x << "," << sel.rect.y << ","
+			<< sel.rect.width << "," << sel.rect.height << ")" << std::endl;
 
 	return strm;
 }

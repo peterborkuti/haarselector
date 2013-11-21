@@ -150,13 +150,12 @@ cv::Mat FileList::getNext(Selections &sels, const uint pcs, cv::Mat imgOld) {
 		img = cv::imread(files[idx]);
 		FileData d = FileList::getFileData(idx);
 		if ((idx == idxOld + 1) && !sels.empty && d.selections.empty) {
-			isTrackingSuccess =
-					tracker.trackSelections(imgOld, sels, img, newSelections);
+			isTrackingSuccess = tracker.trackSelections(imgOld, sels, img,
+					newSelections);
 		}
 		if (!isTrackingSuccess || newSelections.empty) {
 			sels = d.selections;
-		}
-		else {
+		} else {
 			sels = newSelections;
 		}
 	}

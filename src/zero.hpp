@@ -8,15 +8,13 @@
 #ifndef ZERO_HPP_
 #define ZERO_HPP_
 
-
 #include <vector>
 #include <map>
 #include <string>
 
-
 typedef std::vector<std::string> VecString;
-typedef std::map<std::string, VecString > MapSelections;
-typedef std::pair<std::string, VecString > PairSVS;
+typedef std::map<std::string, VecString> MapSelections;
+typedef std::pair<std::string, VecString> PairSVS;
 
 std::string& operator<<(std::string &strm, VecString vs);
 std::ostream& operator<<(std::ostream &strm, VecString vs);

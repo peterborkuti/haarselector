@@ -8,7 +8,6 @@
 #include <ostream>
 #include <sstream>
 
-
 std::string& operator<<(std::string &strm, VecString vs) {
 	strm += "[";
 	for (unsigned int i = 0; i < vs.size(); i++) {

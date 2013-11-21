@@ -3,8 +3,6 @@
  * @author Peter Borkuti
  */
 
-
-
 #ifndef TRACKER_HPP_
 #define TRACKER_HPP_
 
@@ -12,7 +10,6 @@ typedef std::vector<cv::Point> Points;
 typedef std::vector<cv::Point2f> Points2f;
 
 #include "selections.hpp"
-
 
 /**
  * Tracking selected rectangles.
@@ -37,9 +34,8 @@ private:
 	Points2f detectFeaturePoints(cv::Rect rect);
 	bool trackPoints(Points2f pointsToTrack, Points2f &trackedPoints);
 	Points2f filterPoints(Points2f pointsToFilter);
-	cv::Rect computeSelection(cv::Rect originalRect,
-			Points2f originalPoints, Points2f trackedPoints);
+	cv::Rect computeSelection(cv::Rect originalRect, Points2f originalPoints,
+			Points2f trackedPoints);
 };
-
 
 #endif /* TRACKER_HPP_ */

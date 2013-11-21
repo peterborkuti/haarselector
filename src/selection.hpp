@@ -19,7 +19,7 @@ public:
 	Selection();
 	Selection(cv::Rect r);
 	Selection(std::string stype, std::string ssubtype,
-		std::vector<std::string> rect);
+			std::vector<std::string> rect);
 	int getValue(const std::string s, const std::string arr[]);
 	std::string toString();
 	std::string toString(int type_, int subtype_);

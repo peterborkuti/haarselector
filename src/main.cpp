@@ -76,13 +76,12 @@ struct MouseEvent {
 		newEvent = true;
 	}
 	std::ostream& operator<<(std::ostream &ss) {
-		ss << name << " - event: " << event <<" buttonState: " << buttonState <<
-			", selectionDone:" << selectionDone << " x:" <<
-			pt.x << "y:" << pt.y << std::endl;
+		ss << name << " - event: " << event << " buttonState: " << buttonState
+				<< ", selectionDone:" << selectionDone << " x:" << pt.x << "y:"
+				<< pt.y << std::endl;
 		if (selectionDone) {
-			ss <<  "selected region: (" << rect.x <<
-					"," << rect.y << ") (" << rect.width << ","
-					<< rect.height << ")" << std::endl;
+			ss << "selected region: (" << rect.x << "," << rect.y << ") ("
+					<< rect.width << "," << rect.height << ")" << std::endl;
 		}
 
 		return ss;
@@ -149,10 +148,10 @@ void putTextAboveBox(Mat &img, std::string s, Point p) {
 			&baseline);
 	Point textOrg(p);
 	rectangle(img, textOrg,
-			textOrg + Point(textSize.width, - (textSize.height + 2 * baseline)),
+			textOrg + Point(textSize.width, -(textSize.height + 2 * baseline)),
 			Scalar(0, 0, 0), CV_FILLED);
-	putText(img, text, textOrg + Point(0, - baseline),
-			fontFace, fontScale, Scalar::all(255), thickness, 8);
+	putText(img, text, textOrg + Point(0, -baseline), fontFace, fontScale,
+			Scalar::all(255), thickness, 8);
 }
 
 void putType(Mat &img, Selection sel) {
@@ -219,8 +218,8 @@ void selectionOnSelectedWindow(MouseEvent &selectedEvent, Rect& selSelection,
 void selectionOnMainWindow(String wSelected, Mat img, Mat &sel,
 		MouseEvent &mainEvent, double &selRatio, Rect &mainSelection) {
 
-	if (mainEvent.newEvent && mainEvent.selectionDone &&
-			mainEvent.rect.area() > 0) {
+	if (mainEvent.newEvent && mainEvent.selectionDone
+			&& mainEvent.rect.area() > 0) {
 		mainSelection = mainEvent.rect;
 		Mat roi(img, mainEvent.rect);
 		roi.copyTo(sel);
@@ -267,7 +266,8 @@ bool keyManager(Selections &sel, bool &redrawMain, bool &redrawSelection,
 
 	std::cout << c << std::endl;
 
-	while (waitKey(1) != -1) {};
+	while (waitKey(1) != -1) {
+	};
 
 	if (c == 'q' || c == 27) {
 		return false;
@@ -304,7 +304,6 @@ bool keyManager(Selections &sel, bool &redrawMain, bool &redrawSelection,
 		redrawMain = true;
 		redrawSelection = true;
 	}
-
 
 	if (c == 'Q') { //Left arrow
 		img = fileList.getPrev(sel, 1);
@@ -380,8 +379,8 @@ int main(int argc, char** argv) {
 	setMouseCallback(wSelected, onMouse, &mouseSelectedEvent);
 
 	for (;;) {
-		if (!keyManager(selections, redrawMain, redrawSelection, img,
-				fileList, mouseMainEvent)) {
+		if (!keyManager(selections, redrawMain, redrawSelection, img, fileList,
+				mouseMainEvent)) {
 			break;
 		}
 
@@ -396,7 +395,8 @@ int main(int argc, char** argv) {
 			redrawMain = true;
 			mouseSelectedEvent.rightButton = false;
 		} else if (mouseMainEvent.newEvent) {
-			redrawMain = selections.setSelected(mouseMainEvent.pt) || redrawMain;
+			redrawMain = selections.setSelected(mouseMainEvent.pt)
+					|| redrawMain;
 		}
 
 		drawSelections(wMain, wSelected, img, sel, selections, mouseMainEvent,
