@@ -15,6 +15,9 @@ Haar selector allow users to selecting objects from many images in order to trai
 
 ## Description
 
+See on the OpenCV documentation, what
+[training](http://docs.opencv.org/doc/user_guide/ug_traincascade.html) is. In a nutshell:
+
 If you want to use OpenCV's Haar detection, you have to train Haar detector with appropriate images. Namely 
 positive and negative ("background") images. Positive samples are images on which there are rectangular areas which are
 labeled according to your needs.
