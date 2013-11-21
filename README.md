@@ -1,4 +1,6 @@
-# ![OpenCV logo](http://docs.opencv.org/_static/opencv-logo-white.png) training object selector ![OpenCV logo](http://docs.opencv.org/_static/opencv-logo-white.png) 
+# Training-object Selector ![labeling](doc/images/label_001.png)
+
+![OpenCV logo](http://docs.opencv.org/_static/opencv-logo-white.png) ![labeling](doc/images/label_001.png) ![OpenCV logo](http://docs.opencv.org/_static/opencv-logo-white.png) 
 
 > UI program based on OpenCV to select and label rectangles on images for training object detection algorithms.
 
@@ -13,6 +15,8 @@
 
 Training object selector allows users to select objects from many images in order to train object detection algorithm 
 with them.
+
+![screenshot](doc/images/screenshot_001_small.png)
 
 ## Description
 
