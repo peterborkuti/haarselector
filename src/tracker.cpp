@@ -30,7 +30,9 @@ bool Tracker::trackSelections(cv::Mat imgOrig, Selections sels, cv::Mat img,
 	cv::Rect biggestRect(0, 0, img.cols, img.rows);
 
 	cv::cvtColor(imgOrig, greyOrigImg, CV_BGR2GRAY);
+	equalizeHist(greyOrigImg, greyOrigImg);
 	cv::cvtColor(img, greyNewImg, CV_BGR2GRAY);
+	equalizeHist(greyNewImg, greyNewImg);
 
 	for (uint i = 0; i < sels.size(); i++) {
 		std::cout << "selection:" << sels.selections[i] << std::endl;
