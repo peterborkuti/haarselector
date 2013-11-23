@@ -28,6 +28,7 @@ int const MIN_SELECTABLE_AREA = 100;
 Scalar const STORED = Scalar(0, 0, 255);
 Scalar const SELECTION = Scalar(255, 0, 0);
 Scalar const EDIT = Scalar(0, 255, 0);
+Scalar const DETECTED = Scalar(255, 255, 0);
 
 #include "selection.hpp"
 #include "selections.hpp"
@@ -170,6 +171,13 @@ void drawSelections(String windowMain, String windowSelection, Mat img,
 	if (redrawMain || (eventMain.newEvent && eventMain.selectionStart)) {
 		Mat tmp;
 		img.copyTo(tmp);
+
+		if (fl.isDetection()) {
+			Rectangles detected = fl.getDetectedRectangles();
+			for (uint i = 0; i < detected.size(); i++) {
+				rectangle(tmp, detected[i], DETECTED);
+			}
+		}
 
 		for (uint i = 0; i < selections.size(); i++) {
 			rectangle(tmp, selections.getRect(i),
@@ -343,7 +351,9 @@ bool keyManager(Selections &sel, bool &redrawMain, bool &redrawSelection,
 }
 
 int main(int argc, char** argv) {
-	FileList fileList("*.png");
+	std::string cascade_file = "./train/cascade.xml";
+
+	FileList fileList("*.png", cascade_file);
 	load(FILENAME, fileList);
 
 	String wMain = "Select a rectangle with the Mouse for magnifying";

@@ -55,12 +55,17 @@ FileData FileList::getFileData() {
 	return FileList::getFileData(idx);
 }
 
-FileList::FileList(std::string filePattern) {
+bool FileList::isDetection() {
+	return detector.isDetect();
+}
+
+FileList::FileList(std::string filePattern, std::string cascade_file) {
 	pattern = filePattern;
+	detector.load(cascade_file);
 	cv::glob(pattern, files, true);
 
 	if (files.size() > UINT_MAX) {
-		std::cerr << "Too man files. Try to keep them below " <<
+		std::cerr << "Too many files. Try to keep them below " <<
 		UINT_MAX << std::endl;
 	}
 
@@ -147,12 +152,20 @@ cv::Mat FileList::getNext(Selections &sels, const uint pcs, cv::Mat imgOld) {
 		if (idx >= files.size()) {
 			idx = 0; //circular
 		}
+
 		img = cv::imread(files[idx]);
+
+		if (detector.isDetect()) {
+			detectedRectangles = detector.detect(img);
+		}
+
 		FileData d = FileList::getFileData(idx);
+
 		if ((idx == idxOld + 1) && !sels.empty && d.selections.empty) {
 			isTrackingSuccess = tracker.trackSelections(imgOld, sels, img,
 					newSelections);
 		}
+
 		if (!isTrackingSuccess || newSelections.empty) {
 			sels = d.selections;
 		} else {
@@ -187,6 +200,11 @@ void FileList::getSelections(Selections &sels) {
 cv::Mat FileList::getImage() {
 	cv::Mat img = cv::imread(files[idx]);
 	return img;
+}
+
+Rectangles FileList::getDetectedRectangles() {
+	return detectedRectangles;
+
 }
 
 std::ostream& operator<<(std::ostream &ss, FileList &fl) {

@@ -14,6 +14,7 @@
 #include "selections.hpp"
 
 #include "tracker.hpp"
+#include "detector.hpp"
 
 class FileData {
 public:
@@ -37,13 +38,15 @@ private:
 	VecString files;
 	MapFileData mapSelections;
 	Tracker tracker;
+	Rectangles detectedRectangles;
+	Detector detector;
 
 	void setPointers();
 	FileData getFileData(uint idx);
 	FileData getFileData();
 
 public:
-	FileList(std::string filePattern);
+	FileList(std::string filePattern, std::string cascade_file);
 	bool isFileDataForFile(std::string fname);
 	void addSelections(std::string fileName, Selections sels);
 	void setAsBackground();
@@ -52,11 +55,14 @@ public:
 	void toggleBackground();
 	void setSelections(Selections sels);
 	void getSelections(Selections &sels);
+	bool isDetection();
 	cv::Mat getImage();
+	cv::Mat getImage(bool isDetect);
 	cv::Mat getActual(Selections &sels);
 	cv::Mat getNext(Selections &sels, const uint pcs, cv::Mat imgOld);
 	cv::Mat getPrev(Selections &sels, const uint pcs);
 	std::string getTitle();
+	Rectangles getDetectedRectangles();
 	friend std::ostream& operator<<(std::ostream &strm, FileList &fl);
 	friend std::istream& operator>>(std::istream &strm, FileList &fl);
 
