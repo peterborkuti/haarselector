@@ -91,6 +91,7 @@ For more info on opencv_createsamples and opencv_traincascade, see OpenCV docume
 if the object did not change a lot
 * loading saved selections at startup so you can continue work
 * labeling with two categories (type and subtype), forexample "CAR", "FRONT", if you selected a car in a front-view
+* autodetect objects with a trained classifier to help users with checking a classifier goodness
 
 
 
