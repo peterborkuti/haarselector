@@ -35,13 +35,14 @@ bool Tracker::trackSelections(cv::Mat imgOrig, Selections sels, cv::Mat img,
 	equalizeHist(greyNewImg, greyNewImg);
 
 	for (uint i = 0; i < sels.size(); i++) {
-		std::cout << "selection:" << sels.selections[i] << std::endl;
+		Selection sel = sels.selections[i];
+		std::cout << "selection:" << sel << std::endl;
 		cv::Rect trackedRect;
-		bool success = this->trackSelection(sels.selections[i].rect,
-				trackedRect);
+		bool success = this->trackSelection(sel.rect, trackedRect);
 		if (success) {
 			//tracking can go out of images, so use intersection (&)
-			newSels.add(Selection(trackedRect & biggestRect));
+			newSels.add(Selection(sel.type, sel.subtype,
+					trackedRect & biggestRect));
 		}
 	}
 

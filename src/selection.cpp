@@ -33,6 +33,12 @@ Selection::Selection(cv::Rect r) {
 	subtype = FRONT;
 }
 
+Selection::	Selection(int _type, int _subtype, cv::Rect r) {
+	rect = r;
+	type = _type;
+	subtype = _subtype;
+}
+
 Selection::Selection(std::string stype, std::string ssubtype,
 		std::vector<std::string> rectangle) {
 	type = Selection::getValue(stype, TYPES);
