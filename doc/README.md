@@ -21,9 +21,11 @@
 
 ## Windows
 
+![windows](images/screenshot_001.png)
+
 There are two windows. You can magnify parts of the image on the first and select regions on the second.
 
-### The first window shows:
+### The first window shows (on the left):
 
 * the existing selections, with red rectangles
 * the active selection with green rectangle and label
@@ -32,7 +34,7 @@ There are two windows. You can magnify parts of the image on the first and selec
 on the second window 
 * if you move the mouse, the active selection will change
 
-### The second window
+### The second window (on the right)
 
 It is for creating selections. So if you draw a rectangle and click with the right mouse button
 (or move the mouse to the first window) the selection will be saved and showed on the first window.
