@@ -6,6 +6,7 @@
 * [Short description](#short)
 * [Description](#description)
 * [Usage](#usage)
+* [Manual](#manual)
 * [Output file format](#output)
 * [Features](#features)
 
@@ -54,6 +55,10 @@ What you only need is
 * use my program to select rectangles of objects on images and label them, or label the background images.
 
 ![screenshot](doc/images/screenshot_001_small.png)
+
+## Manual
+
+[manual](doc/README.md)
 
 ## Output
 
