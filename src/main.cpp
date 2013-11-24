@@ -22,7 +22,6 @@
 
 using namespace cv;
 
-std::string const FILENAME = "pictures.txt";
 int const MIN_SELECTABLE_AREA = 100;
 
 Scalar const STORED = Scalar(0, 0, 255);
@@ -33,6 +32,7 @@ Scalar const DETECTED = Scalar(255, 255, 0);
 #include "selection.hpp"
 #include "selections.hpp"
 #include "filelist.hpp"
+#include "cli.hpp"
 
 struct MouseEvent {
 	MouseEvent() {
@@ -265,7 +265,8 @@ void load(std::string fileName, FileList &fl) {
 }
 
 bool keyManager(Selections &sel, bool &redrawMain, bool &redrawSelection,
-		Mat &img, FileList &fileList, MouseEvent &mainEvent) {
+		Mat &img, FileList &fileList, MouseEvent &mainEvent,
+		std::string outputFile) {
 	char c = waitKey(10);
 
 	if (c == -1) {
@@ -288,7 +289,7 @@ bool keyManager(Selections &sel, bool &redrawMain, bool &redrawSelection,
 
 	if (c == 'l') { //load selections
 		fileList.setSelections(sel);
-		load(FILENAME, fileList);
+		load(outputFile, fileList);
 		fileList.getSelections(sel);
 		img = fileList.getImage();
 		redrawMain = true;
@@ -296,7 +297,7 @@ bool keyManager(Selections &sel, bool &redrawMain, bool &redrawSelection,
 
 	if (c == 'w') { //write files
 		fileList.setSelections(sel);
-		save(FILENAME, fileList);
+		save(outputFile, fileList);
 	}
 
 	if (c == 'S') { //Right arrow
@@ -350,11 +351,23 @@ bool keyManager(Selections &sel, bool &redrawMain, bool &redrawSelection,
 	return true;
 }
 
-int main(int argc, char** argv) {
-	std::string cascade_file = "./train/cascade.xml";
+int main(int argc, const char** argv) {
+	//cascade file for object autodetection
+	std::string cascadeFile = "";
+	//file glob for images
+	std::string filenamePattern = "";
+	//name of output file
+	std::string outputFile = "";
+	bool isTracking = true;
 
-	FileList fileList("*.png", cascade_file);
-	load(FILENAME, fileList);
+	CLI cli;
+	if (!cli.parse(argc, argv, filenamePattern, cascadeFile, isTracking,
+			outputFile)) {
+		return 0;
+	}
+
+	FileList fileList(filenamePattern, cascadeFile);
+	load(outputFile, fileList);
 
 	String wMain = "Select a rectangle with the Mouse for magnifying";
 	String wSelected = "Select region";
@@ -390,7 +403,7 @@ int main(int argc, char** argv) {
 
 	for (;;) {
 		if (!keyManager(selections, redrawMain, redrawSelection, img, fileList,
-				mouseMainEvent)) {
+				mouseMainEvent, outputFile)) {
 			break;
 		}
 
